@@ -1,0 +1,125 @@
+from Crypto.Cipher import AES
+from Crypto.Random import get_random_bytes
+from Crypto.Util.Padding import pad,unpad
+
+def encrypted_text(key , palintext):
+    cipher = AES.new(key,AES.MODE_ECB)
+    ciphertext = cipher.encrypt(pad(plaintext,AES.block_size))
+    return ciphertext
+
+
+def decrypted_text(key , ciphertext):
+    cipher = AES.new(key,AES.MODE_ECB)
+    decrypte_text = unpad(cipher.decrypt(ciphertext),AES.block_size)
+    return decrypte_text
+
+
+key = get_random_bytes(16)
+plaintext = b'this is rhe messege'
+
+ciphertext = encrypted_text(key ,plaintext)
+decrypte_text =decrypted_text(key ,ciphertext)
+
+print("origial messge;",plaintext.decode('utf-8'))
+print("encrpted_text:",ciphertext)
+print("decrypt_text:",decrypte_text.decode('utf-8'))
+
+-------------------------------------------------------------------------------
+
+print("Choose the cryptography Mode")
+
+print ("    1 PLAYFAIR")
+print( "    2 CEASAR")
+
+op = input ("Enter the number: ")
+#print (op)
+
+if op == 1:
+    print("Playfair ciper mode")
+    plaintext1 = input ("\n Enter the message: ")
+    key1 = input ("Enter the key: ")
+    print("\nChoose")
+
+    print ("    1 Encryption")
+    print( "    2 Decryption")
+    print()
+    method = input ("Enter the number: ")
+        
+    if method == 1:
+
+        print("Playfair cipher moode")
+
+else: #op == 2:
+    plaintext1 = input ("Enter the message: ")
+    key1 = int(input ("Enter the key: "))
+    print("\n Choose")
+
+    print ("    1 Encryption")
+    print( "    2 Decryption")
+    print()
+    method2 = int(input ("Enter the number: "))
+    
+    if method2 == 1:
+
+        print("Ceaser cipher moode")
+        letters = 'abcdefghijklmnopqrstuvwxyz'
+
+        def encrypt(plaintext,key):
+            cipertext = " "
+
+            for letter in plaintext:
+                letter=letter.lower()
+                if not letter == '':
+                    index = letters.find(letter)
+                    if index == -1:
+                        cipertext += letter
+                    else:
+                        new_index = index + key
+                        if new_index >= 26:
+                            new_index -= 26
+                        cipertext += letters[new_index]
+            return cipertext
+        print ('ENCRYPTION')
+        print()
+
+        key = key1
+        text = plaintext1
+
+        cipertext = encrypt(text,key)
+        print(f'CIPERTEXT : {cipertext}')
+    
+    else:
+        print("Ceaser ciper moode")
+        letters = 'abcdefghijklmnopqrstuvwxyz'
+
+        def decrypt(plaintext,key):
+            cipertext = " "
+
+            for letter in plaintext:
+                letter=letter.lower()
+                if not letter == '':
+                    index = letters.find(letter)
+                    if index == -1:
+                        cipertext += letter
+                    else:
+                        new_index = index - key
+                        if new_index < 0:
+                            new_index += 26
+                        cipertext += letters[new_index]
+            return cipertext
+        print ('DECRYPTION')
+        print()
+
+       
+
+        key = key1
+        text = plaintext1
+
+        cipertext = decrypt(text,key)
+        print(f'CIPERTEXT : {cipertext}')
+
+#   else:
+    print("      ")
+
+
+
